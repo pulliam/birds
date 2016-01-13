@@ -3,11 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>BirdWatchr</title>
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script src="/js/main.js"></script>
 </head>
 <body>
   <h1>Birds of NY</h1>
-  <a href="/sightings/new">Spotted a bird?</a>
+  <ul>
+  <% sightings.forEach(function(sighting){ %>
+  	<li><%= sighting.sighting %>, <%= sighting.location %></li>
+  <% }) %>
+  </ul>
+  <a href="/sightings/new">Spotted a bird?</a><br>
+  <a href id="button">See All Birds + INFO</a><br>
+  <script>
+    $(document).ready(function(){
+      $('#button').on('click', function(event){
+      	event.preventDefault();
+        $.ajax({
+          url: '/demo',
+          type: 'GET',
+          dataType: 'json'
+        }).done(function(response){
+        	$newDiv = $('body').append('<div><ul id="allbirds"></ul></div>');
+        	response.forEach(function(bird){
+        		console.log(bird.sighting);
+        		$('#allbirds').append('<li>' + bird.sighting + ', was spotted in ' + bird.location + ' at ' + bird.date + '; LAT: ' + bird.latitude + ' + LONG' + bird.longitude + '  ||   ' + '<a href="/sighting/' + bird._id + '/edit">Edit Bird</a>' + '</li>');
+        	})
+        })
+      })
+    })
+  </script>
 </body>
 </html>
 

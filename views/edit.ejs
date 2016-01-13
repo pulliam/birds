@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BirdWatchr</title>
+  <script src="/js/main.js"></script>
+</head>
+<body>
+  <h1>Edit your bird</h1>
+
+  <form method="POST" action="/sightings/<%= sighting._id %>?_method=PATCH">
+    	Bird: <input type="text" name="sighting[sighting]" value="<%= sighting.sighting %>">
+    	Location: <input type="text" name="sighting[location]" value="<%= sighting.location %>">
+    	<input type="submit" value="update">
+  </form>
+
+</body>
+</html>
+
