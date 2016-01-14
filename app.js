@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var geocoder = require('geocoder');
+var cool = require('cool-ascii-faces');
 
 // Configuration
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,6 +34,10 @@ app.use(function(req, res, next){
 });
 
 // Routes
+app.get('/cool', function(request, response) {
+  response.send(cool());
+});
+
 app.get('/', function(req, res){
   db.collection('sightings').find({}).sort({date:-1}).limit(3).toArray(function(err, results){
     res.render('index', {sightings: results});
